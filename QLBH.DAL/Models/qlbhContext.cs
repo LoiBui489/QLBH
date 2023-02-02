@@ -18,6 +18,7 @@ namespace QLBH.DAL.Models
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrdersDetail> OrdersDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -46,6 +47,35 @@ namespace QLBH.DAL.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("Comment");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Content)
+                    .HasMaxLength(200)
+                    .HasColumnName("content");
+
+                entity.Property(e => e.ProductId).HasColumnName("productId");
+
+                entity.Property(e => e.Star).HasColumnName("star");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Comment__product__1920BF5C");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Comment__userId__182C9B23");
             });
 
             modelBuilder.Entity<Order>(entity =>

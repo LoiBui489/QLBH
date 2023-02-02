@@ -9,6 +9,7 @@ namespace QLBH.DAL.Models
     {
         public User()
         {
+            Comments = new HashSet<Comment>();
             Orders = new HashSet<Order>();
         }
 
@@ -21,6 +22,7 @@ namespace QLBH.DAL.Models
         public string Pwd { get; set; }
         public string UserRole { get; set; }
 
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

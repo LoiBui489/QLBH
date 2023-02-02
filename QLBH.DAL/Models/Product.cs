@@ -9,6 +9,7 @@ namespace QLBH.DAL.Models
     {
         public Product()
         {
+            Comments = new HashSet<Comment>();
             OrdersDetails = new HashSet<OrdersDetail>();
         }
 
@@ -22,6 +23,7 @@ namespace QLBH.DAL.Models
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<OrdersDetail> OrdersDetails { get; set; }
     }
 }
